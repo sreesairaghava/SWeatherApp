@@ -1,0 +1,11 @@
+{
+    "current_weather": {
+    "time": "2026-05-02T12:15",
+    "interval": 900,
+    "temperature": 38.4,
+    "windspeed": 8.8,
+    "winddirection": 282,
+    "is_day": 1,
+    "weathercode": 2
+    }
+}
