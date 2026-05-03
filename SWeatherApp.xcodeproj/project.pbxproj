@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F9F309ED2FA7856200D670AB /* forecast_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = F9F309EC2FA7856200D670AB /* forecast_sample.json */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F9F309CC2FA61C2B00D670AB /* SWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9F309EC2FA7856200D670AB /* forecast_sample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = forecast_sample.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		F9F309C32FA61C2B00D670AB = {
 			isa = PBXGroup;
 			children = (
+				F9F309E72FA77E1300D670AB /* Resources */,
 				F9F309CE2FA61C2B00D670AB /* SWeatherApp */,
 				F9F309CD2FA61C2B00D670AB /* Products */,
 			);
@@ -43,6 +49,14 @@
 				F9F309CC2FA61C2B00D670AB /* SWeatherApp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F9F309E72FA77E1300D670AB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F9F309EC2FA7856200D670AB /* forecast_sample.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +123,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F309ED2FA7856200D670AB /* forecast_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
