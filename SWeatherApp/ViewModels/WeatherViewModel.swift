@@ -17,6 +17,10 @@ final class WeatherViewModel {
         windSpeed: 0
     )
     var errorMessage: String?
+    var isLoading = false
+    var cityName = "Bengaluru"
+    var latitudeText = "12.9716"
+    var longitudeText = "77.5946"
     
     func loadLocalSample() {
         do {
@@ -25,5 +29,26 @@ final class WeatherViewModel {
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? "Unkown error."
         }
+    }
+    
+    func loadLiveWeather() async {
+        guard let latitude = Double(latitudeText),
+              let longitude = Double(longitudeText) else {
+            errorMessage = "Enter valid latitude and longitude values."
+            return
+        }
+        
+        isLoading = true
+        errorMessage = nil
+        do {
+            summary = try await LiveWeatherService.fetchWeather(
+                city: cityName,
+                latitude: latitude,
+                longitude: longitude
+            )
+        } catch {
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? "Unknown error."
+        }
+        isLoading = false
     }
 }

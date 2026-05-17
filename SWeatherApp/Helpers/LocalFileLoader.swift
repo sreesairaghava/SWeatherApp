@@ -38,19 +38,19 @@ enum LocalDataError: LocalizedError {
     }
 }
 
-enum LocalWeatherDecoder {
+enum WeatherResponseDecoder {
     static func decodeWeatherSummary(from data: Data, city: String) throws -> WeatherSummary {         do {
-            let dto = try JSONDecoder().decode(ForecastResponseDTO.self, from: data)
-            return dto.toDomain(city: city)
-        } catch {
-            throw LocalDataError.decodeFailed(underlying: error)
-        }
+        let dto = try JSONDecoder().decode(ForecastResponseDTO.self, from: data)
+        return dto.toDomain(city: city)
+    } catch {
+        throw LocalDataError.decodeFailed(underlying: error)
+    }
     }
 }
 
 enum LocalWeatherProvider {
     static func loadWeather(city: String) throws -> WeatherSummary {
         let data = try LocalFileLoader.loadData(fileName: "forecast_sample")
-        return try LocalWeatherDecoder.decodeWeatherSummary(from: data, city: city)
+        return try WeatherResponseDecoder.decodeWeatherSummary(from: data, city: city)
     }
 }
