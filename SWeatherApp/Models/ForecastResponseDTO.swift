@@ -42,17 +42,25 @@ enum WeatherCodeMapper {
     static func text(for code: Int) -> String {
         switch code {
         case 0:
-            return "Clear Sky"
+            return "Clear sky"
         case 1:
-            return "Few Clouds"
+            return "Mainly clear"
         case 2:
-            return "Shreyas is doing great"
+            return "Partly cloudy"
         case 3:
-            return "Broken Clouds"
-        case 4:
-            return "Overcast Clouds"
-        case 5:
-            return "Mist"
+            return "Overcast"
+        case 45, 48:
+            return "Fog"
+        case 51, 53, 55:
+            return "Drizzle"
+        case 61, 63, 65:
+            return "Rain"
+        case 71, 73, 75:
+            return "Snow"
+        case 80, 81, 82:
+            return "Rain showers"
+        case 95:
+            return "Thunderstorm"
         default:
             return "Unknown"
         }

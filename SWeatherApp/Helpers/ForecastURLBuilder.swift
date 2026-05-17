@@ -18,15 +18,18 @@ enum ForecastURLBuilder {
         components.queryItems = [
             URLQueryItem(name: "latitude", value: "\(latitude)"),
             URLQueryItem(name: "longitude", value: "\(longitude)"),
-            URLQueryItem(name: "current", value: "temperature_2m,weather_code")
+            URLQueryItem(name: "current_weather", value: "true")
         ]
         return components.url
     }
 }
 
 enum RequestFactory {
-    static func makeForecastRequest(latitude: Double, longtitude: Double) -> URLRequest? {
-        guard let url = ForecastURLBuilder.makeURL(latitude: latitude, longitude: longtitude) else {
+    static func makeForecastRequest(latitude: Double, longitude: Double) -> URLRequest? {
+        guard let url = ForecastURLBuilder.makeURL(
+            latitude: latitude,
+            longitude: longitude
+        ) else {
             return nil
         }
         var request = URLRequest(url: url)
