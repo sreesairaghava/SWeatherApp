@@ -1,5 +1,5 @@
 //
-//  LiveWeatherService.swift
+//  URLSessionHTTPClient.swift
 //  SWeatherApp
 //
 //  Created by Sree Sai Raghava Dandu on 17/05/26.
@@ -7,12 +7,8 @@
 
 import Foundation
 
-enum LiveWeatherService {
-    static func fetchWeather(city: String, latitude: Double, longitude: Double) async throws -> WeatherSummary {
-        guard let request = RequestFactory.makeForecastRequest(latitude: latitude, longitude: longitude) else {
-            throw NetworkError.invalidURL
-        }
-        
+final class URLSessionHTTPClient: HTTPClient {
+    func data(for request: URLRequest) async throws -> Data {
         let (data, response): (Data, URLResponse)
         
         do {
@@ -28,7 +24,6 @@ enum LiveWeatherService {
         guard 200..<300 ~= httpResponse.statusCode else {
             throw NetworkError.badStatusCode(httpResponse.statusCode)
         }
-        
-        return try WeatherResponseDecoder.decodeWeatherSummary(from: data, city: city)
+        return data
     }
 }

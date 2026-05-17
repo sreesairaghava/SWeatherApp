@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var viewModel: WeatherViewModel = .init()
+    @State private var viewModel: WeatherViewModel =
+    WeatherViewModel(liveWeatherRepository: LiveWeatherRepository(forecastAPI: OpenMeteoForecastAPI(httpClient: URLSessionHTTPClient())), localWeatherRepository: LocalWeatherRepository())
     var body: some View {
         NavigationStack {
             ScrollView {
