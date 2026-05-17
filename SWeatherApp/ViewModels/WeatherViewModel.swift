@@ -22,12 +22,23 @@ final class WeatherViewModel {
     var latitudeText = "12.9716"
     var longitudeText = "77.5946"
     
+    private let liveWeatherRepository: LiveWeatherRepository
+    private let localWeatherRepository: LocalWeatherRepository
+    
+    init(liveWeatherRepository: LiveWeatherRepository, localWeatherRepository: LocalWeatherRepository) {
+        self.liveWeatherRepository = liveWeatherRepository
+        self.localWeatherRepository = localWeatherRepository
+    }
+    
     func loadLocalSample() {
-        do {
-            errorMessage = nil
-            summary = try LocalWeatherProvider.loadWeather(city: "Bengaluru")
-        } catch {
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? "Unkown error."
+        Task {
+            do {
+                errorMessage = nil
+                summary = try await localWeatherRepository.currentWeather(
+                    city: cityName,
+                    latitude: 0,
+                    longitude: 0)
+            }
         }
     }
     
@@ -41,7 +52,7 @@ final class WeatherViewModel {
         isLoading = true
         errorMessage = nil
         do {
-            summary = try await LiveWeatherService.fetchWeather(
+            summary = try await liveWeatherRepository.currentWeather(
                 city: cityName,
                 latitude: latitude,
                 longitude: longitude
