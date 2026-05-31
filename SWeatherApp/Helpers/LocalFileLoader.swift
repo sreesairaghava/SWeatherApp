@@ -41,7 +41,7 @@ enum LocalDataError: LocalizedError {
 enum WeatherResponseDecoder {
     static func decodeWeatherSummary(from data: Data, city: String) throws -> WeatherSummary {         do {
         let dto = try JSONDecoder().decode(ForecastResponseDTO.self, from: data)
-        return dto.toDomain(city: city)
+        return dto.toSummary(city: city)
     } catch {
         throw LocalDataError.decodeFailed(underlying: error)
     }

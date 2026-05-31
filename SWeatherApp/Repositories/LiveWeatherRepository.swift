@@ -14,8 +14,11 @@ final class LiveWeatherRepository: WeatherRepository {
         self.forecastAPI = forecastAPI
     }
     
-    func currentWeather(city: String, latitude: Double, longitude: Double) async throws -> WeatherSummary {
-        let dto = try await forecastAPI.fetchForecast(latitude: latitude, longitude: longitude)
-        return dto.toDomain(city: city)
+    func weatherDashboard(city: String, latitude: Double, longitude: Double) async throws -> WeatherDashboard {
+        let dto = try await forecastAPI.fetchForecast(
+            latitude: latitude,
+            longitude: longitude
+        )
+        return WeatherDashboard(summary: dto.toSummary(city: city), hourly: dto.toHourlyForecast())
     }
 }

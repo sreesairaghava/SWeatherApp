@@ -15,9 +15,7 @@ final class OpenMeteoForecastAPI: ForecastAPI {
     }
     
     func fetchForecast(latitude: Double, longitude: Double) async throws -> ForecastResponseDTO {
-        guard let request = RequestFactory.makeForecastRequest(latitude: latitude, longitude: longitude) else {
-            throw NetworkError.invalidURL
-        }
+        let request = try ForecastRequest(latitude: latitude, longitude: longitude).urlRequest()
         
         let data = try await httpClient.data(for: request)
         

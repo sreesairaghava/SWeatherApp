@@ -10,25 +10,35 @@ import Foundation
 // Data Transfer Object
 struct ForecastResponseDTO: Decodable {
     let current: CurrentDTO
-    enum CodingKeys: String, CodingKey {
-        case current = "current_weather"
-    }
+    let hourly: HourlyDTO
 }
 
 struct CurrentDTO: Decodable {
+    let time: String
     let temperature: Double
     let weatherCode: Int
     let windSpeed: Double
     
     enum CodingKeys: String, CodingKey {
-        case temperature
-        case weatherCode = "weathercode"
-        case windSpeed = "windspeed"
+        case time
+        case temperature = "temperature_2m"
+        case weatherCode = "weather_code"
+        case windSpeed = "wind_speed_10m"
+    }
+}
+
+struct HourlyDTO: Decodable {
+    let time: [String]
+    let temperature: [Double]
+    
+    enum CodingKeys: String, CodingKey {
+        case time
+        case temperature = "temperature_2m"
     }
 }
 
 extension ForecastResponseDTO {
-    func toDomain(city: String) -> WeatherSummary {
+    func toSummary(city: String) -> WeatherSummary {
         WeatherSummary(
             city: city,
             temperatureCelsius: current.temperature,
@@ -36,7 +46,23 @@ extension ForecastResponseDTO {
             windSpeed: current.windSpeed
         )
     }
-}
+    
+    func toHourlyForecast() -> [HourlyForecastPoint] {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        return zip(hourly.time, hourly.temperature).compactMap { time, temperature -> HourlyForecastPoint? in
+            guard let date = formatter.date(from: time) else { return nil }
+
+            return HourlyForecastPoint(
+                time: date,
+                temperatureCelcius: temperature
+            )
+        }
+    }}
+
+// Example: [(31-05-2026 1:00 : 22.5), (31-05-2026 2:00 : 21.5), (31-05-2026 3:00 : 19.5)]
 
 enum WeatherCodeMapper {
     static func text(for code: Int) -> String {

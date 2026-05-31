@@ -15,6 +15,6 @@ final class ShreyasForecastAPI: ForecastAPI {
     }
     
     func fetchForecast(latitude: Double, longitude: Double) async throws -> ForecastResponseDTO {
-        return ForecastResponseDTO(current: CurrentDTO(temperature: 21, weatherCode: 2, windSpeed: 30))
+        return ForecastResponseDTO(current: CurrentDTO(time: "", temperature: 21, weatherCode: 2, windSpeed: 30), hourly: HourlyDTO(time: [], temperature: []))
     }
 }
